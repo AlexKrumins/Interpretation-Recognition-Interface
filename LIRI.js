@@ -12,26 +12,29 @@ process.argv.splice(0,3);
 let input = process.argv.slice(0).join(" ");
 const divider = "\n------------------------------------------------------------\n\n";
 let showData = [];
-switch (action) {
-    case "concert-this":
-      concertFunc(input);
-      break;
-    
-    case "spotify-this-song":
-      spotifyFunc(input);
-      break;
+function beginSwitch() {
+  switch (action) {
+      case "concert-this":
+        concertFunc(input);
+        break;
+      
+      case "spotify-this-song":
+        spotifyFunc(input);
+        break;
 
-      case "movie-this":
-      omdbFunc(input);
-      break;
+        case "movie-this":
+        omdbFunc(input);
+        break;
 
-      case "do-what-it-says":
-      wildCardFunc(input);
-      break;
+        case "do-what-it-says":
+        wildCardFunc();
+        break;
 
-    default:
-      console.log("Sorry you have to type a ** command ** and then a name");
+      default:
+        console.log("Sorry you have to type a ** command ** and then a name");
+  };
 };
+beginSwitch();
 function storeData(){
   fs.appendFile("log.txt", showData + divider, function(err) {
     if (err) throw err;
@@ -66,6 +69,30 @@ function spotifyFunc() {
 }
 function omdbFunc() {
   if (input === "") {input = "Mr. Nobody"};
-  let URL = ""
-  axios.get
+  let URL = "http://www.omdbapi.com/?t=" + input + "&apikey=" + omdb.apikey;
+  axios.get(URL).then(function(response){
+    jsonData = response.data;
+    showData = [
+      "Title: "  + jsonData.Title,
+      "Year: " + jsonData.Year,
+      jsonData.Ratings[0].Source + " Rating: " + jsonData.Ratings[0].Value,
+      jsonData.Ratings[1].Source + " Rating: " + jsonData.Ratings[1].Value,
+      "Country: " + jsonData.Country,
+      "Language: " + jsonData.Language,
+      "Plot: " + jsonData.Plot,
+      "Actors: " + jsonData.Actors
+    ].join('\n');
+    console.log(showData);
+  })
 }
+function wildCardFunc() {
+  fs.readFile("random.txt", "utf8", function(err, data){
+    if (err) {
+      return console.log(err);
+    }
+    data = data.split(",");
+    action = data[0];
+    input = data[1];
+    beginSwitch(action, input);
+  })
+};
