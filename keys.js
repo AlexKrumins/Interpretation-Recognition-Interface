@@ -1,4 +1,4 @@
-console.log('this is loaded');
+console.log('keys loaded');
 
 exports.spotify = {
   id: process.env.SPOTIFY_ID,
@@ -7,4 +7,8 @@ exports.spotify = {
 
 exports.omdb = {
   apikey: process.env.omdb_apikey,
+};
+
+exports.bandsInTown = {
+  app_id: process.env.bandsInTown_app_id,
 };

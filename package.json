@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/AlexKrumins/Interpretation-Recognition-Interface/issues"
   },
-  "homepage": "https://github.com/AlexKrumins/Interpretation-Recognition-Interface#readme"
+  "homepage": "https://github.com/AlexKrumins/Interpretation-Recognition-Interface#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^7.0.0",
+    "fs": "0.0.1-security"
+  }
 }
