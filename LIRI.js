@@ -31,7 +31,7 @@ function beginSwitch() {
         break;
 
       default:
-        console.log("Sorry you have to type a ** command ** and then a name");
+        console.log("Sorry you have to type a command:'concert-this' or 'spotify-this-song' or 'movie-this' or 'do-what-it-says'");
   };
 };
 beginSwitch();
@@ -42,17 +42,21 @@ function storeData(){
   });
 };
 function concertFunc() {
-  let URL = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=" + bandsInTown.app_id;
-  axios.get(URL).then(function(response){
-    jsonData = response.data[0];
-    showData = [
-      "Lineup: " + jsonData.lineup,
-      "Venue: " + jsonData.venue.name,
-      "Location: " + jsonData.venue.city + "," + jsonData.venue.region,
-      "Date of the Event: " + moment(jsonData.datetime).format("MM/DD/YYYY")
-    ].join("\n");
-    storeData();
-  })
+  if (input === "") {
+    console.log("Please input an artist or band to see if they're on tour");
+  } else {
+    let URL = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=" + bandsInTown.app_id;
+    axios.get(URL).then(function(response){
+      jsonData = response.data[0];
+      showData = [
+        "Lineup: " + jsonData.lineup,
+        "Venue: " + jsonData.venue.name,
+        "Location: " + jsonData.venue.city + "," + jsonData.venue.region,
+        "Date of the Event: " + moment(jsonData.datetime).format("MM/DD/YYYY")
+      ].join("\n");
+      storeData();
+    })
+  }
 }
 function spotifyFunc() {
   if (input === "") {input = "ace of base the sign"};
@@ -82,7 +86,7 @@ function omdbFunc() {
       "Plot: " + jsonData.Plot,
       "Actors: " + jsonData.Actors
     ].join('\n');
-    console.log(showData);
+    storeData();
   })
 }
 function wildCardFunc() {
