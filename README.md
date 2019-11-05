@@ -1,4 +1,7 @@
 # LIRI-Bot
+## Preview
+![preview demo](shortdemo.gif)
+
 ## Interpretation-Recognition-Interface
 - https://github.com/AlexKrumins/Interpretation-Recognition-Interface/blob/master/LIRI%20demo.mp4
 ### What the project does:
